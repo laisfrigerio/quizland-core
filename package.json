@@ -1,0 +1,27 @@
+{
+  "name": "quizland-core",
+  "description": "QuizLand is a tiny library with common functions to manage a quiz",
+  "version": "0.1.0",
+  "main": "dist/index.js",
+  "types": "dist/types.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest"
+  },
+  "keywords": [
+    "quiz",
+    "quizland"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "@types/node": "^22.10.5",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.5",
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "ts-node": "^10.9.2"
+  }
+}

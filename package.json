@@ -1,7 +1,7 @@
 {
   "name": "quizland-core",
   "description": "QuizLand is a tiny library with common functions to manage a quiz",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "main": "dist/index.js",
   "types": "dist/types.d.ts",
   "scripts": {

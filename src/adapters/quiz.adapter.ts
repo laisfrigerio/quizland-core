@@ -4,7 +4,7 @@ import { QuizLevel, QuizMode, TypeAnswer } from '../types';
 
 export const generateRadomString = (): string => {
   return Math.random().toString().substring(2, 12);
-}
+};
 
 const isTrainingMode = (mode: string): boolean => {
   return mode === 'training';

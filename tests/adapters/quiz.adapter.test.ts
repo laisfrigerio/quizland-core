@@ -5,7 +5,7 @@ import { Question, QuizConfig } from '../../src/entities/quiz.entity';
 jest.mock('crypto');
 
 const id = '0123456789';
-jest.spyOn(global.Math, "random").mockReturnValue(0.0123456789);
+jest.spyOn(global.Math, 'random').mockReturnValue(0.0123456789);
 
 const mockConfig: QuizConfigDTO = {
   title: 'General Knowledge Quiz',

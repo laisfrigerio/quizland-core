@@ -1,7 +1,10 @@
-import { randomUUID } from 'crypto';
 import { QuizConfigDTO, QuestionDTO, OptionDTO } from '../dto/quiz.dto';
 import { QuizConfig, Question, Option } from '../entities/quiz.entity';
 import { QuizLevel, QuizMode, TypeAnswer } from '../types';
+
+export const generateRadomString = (): string => {
+  return Math.random().toString().substring(2, 12);
+};
 
 const isTrainingMode = (mode: string): boolean => {
   return mode === 'training';
@@ -33,7 +36,7 @@ const externalQuestionToInternal = (
 ): Question => {
   const { answerDetails, content, options, correctAnswerIds } = question;
   return {
-    id: randomUUID(),
+    id: generateRadomString(),
     content,
     answerDetails,
     hasToShowAnswerDetails:
@@ -62,7 +65,7 @@ export const externalQuizConfigToInternal = (
   const quizLevel: QuizLevel = level || 'easy';
 
   return {
-    id: randomUUID(),
+    id: generateRadomString(),
     title,
     category,
     mode: quizType,

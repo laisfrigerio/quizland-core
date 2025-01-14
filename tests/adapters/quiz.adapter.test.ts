@@ -1,14 +1,11 @@
-import { randomUUID } from 'crypto';
 import { externalQuizConfigToInternal } from '../../src/adapters/quiz.adapter';
 import { QuizConfigDTO } from '../../src/dto/quiz.dto';
 import { Question, QuizConfig } from '../../src/entities/quiz.entity';
 
 jest.mock('crypto');
 
-const id = '812df5b3-5e7c-465e-b65b-db42858e2928';
-(randomUUID as jest.Mock).mockReturnValue(
-  '812df5b3-5e7c-465e-b65b-db42858e2928',
-);
+const id = '0123456789';
+jest.spyOn(global.Math, 'random').mockReturnValue(0.0123456789);
 
 const mockConfig: QuizConfigDTO = {
   title: 'General Knowledge Quiz',

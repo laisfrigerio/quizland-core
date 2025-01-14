@@ -1,4 +1,4 @@
-import { QuizLevel, QuizMode } from "../types";
+import { QuizLevel, QuizMode } from '../types';
 
 export interface OptionDTO {
   id: number;

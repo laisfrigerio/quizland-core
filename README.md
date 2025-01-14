@@ -75,31 +75,31 @@ const quizLand = QuizLand({
 - Get Current Question
 
 ```ts
-    const currentQuestion = quizLand.getCurrentQuestion();
+const currentQuestion = quizLand.getCurrentQuestion();
 ```
 
 - Check Answer
 
 ```ts
-    const isCorrectAnswer = quizLand.checkAnswer([1,2]);
+const isCorrectAnswer = quizLand.checkAnswer([1, 2]);
 ```
 
 - Get Current Score
 
 ```ts
-    const score = quizLand.getScore();
+const score = quizLand.getScore();
 ```
 
 - Go To Next Question
 
 ```ts
-    quizLand.goToNextQuestion();
+quizLand.goToNextQuestion();
 ```
 
 - Back To Previous Question
 
 ```ts
-    quizLand.goToPreviousQuestion();
+quizLand.goToPreviousQuestion();
 ```
 
 ## 👩 Author

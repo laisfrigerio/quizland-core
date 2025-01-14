@@ -1,4 +1,4 @@
-import { Question, QuizConfig } from "./entities/quiz.entity";
+import { Question, QuizConfig } from './entities/quiz.entity';
 
 export class QuizManager {
   private config: QuizConfig;
@@ -21,9 +21,13 @@ export class QuizManager {
     return this.currentQuestionIndex;
   }
 
-  private matchAnwers(currentQuestion: Question, selectedOptionIds: number[]): boolean {
-    return currentQuestion.correctAnswerIds
-            .every(answerId => selectedOptionIds.includes(answerId))
+  private matchAnwers(
+    currentQuestion: Question,
+    selectedOptionIds: number[],
+  ): boolean {
+    return currentQuestion.correctAnswerIds.every((answerId) =>
+      selectedOptionIds.includes(answerId),
+    );
   }
 
   checkAnswer(selectedOptionIds: number[]): boolean {

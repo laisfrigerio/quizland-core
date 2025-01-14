@@ -21,7 +21,7 @@
         { "id": 1, "content": "Salvador" },
         { "id": 2, "content": "Rio de Janeiro" },
         { "id": 3, "content": "São Paulo" },
-        { "id": 4, "content": "Brasília"}
+        { "id": 4, "content": "Brasília" }
       ],
       "correctAnswerIds": [4]
     },

@@ -1,4 +1,4 @@
-import { QuizLevel, QuizMode, TypeAnswer } from "../types";
+import { QuizLevel, QuizMode, TypeAnswer } from '../types';
 
 export interface Option {
   id: number;
@@ -21,8 +21,8 @@ export interface QuizConfig {
   category: string;
   mode: QuizMode;
   questions: Question[];
-  hasOptionToTryAgain: boolean; 
+  hasOptionToTryAgain: boolean;
   hasTimer: boolean;
   hasToShowScore: boolean;
-  level: QuizLevel; 
+  level: QuizLevel;
 }

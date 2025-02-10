@@ -81,7 +81,6 @@ describe('QuizManager', () => {
   test('should initialize with the first question', () => {
     expect(manager.getCurrentQuestion()).toEqual(mockConfig.questions[0]);
     expect(manager.getScore()).toBe(0);
-    expect(manager.getIncorrectAnswers()).toBe(0);
     expect(manager.getProgress()).toBe('1/4');
   });
 
@@ -89,7 +88,6 @@ describe('QuizManager', () => {
     const result = manager.checkAnswer([1]);
     expect(result).toBe(true);
     expect(manager.getScore()).toBe(1);
-    expect(manager.getIncorrectAnswers()).toBe(0);
   });
 
   test('should go to the next question', () => {
@@ -125,7 +123,6 @@ describe('QuizManager', () => {
     const result = manager.checkAnswer([1]);
     expect(result).toBe(false);
     expect(manager.getScore()).toBe(1);
-    expect(manager.getIncorrectAnswers()).toBe(1);
   });
 
   test('should verify a correct answer with multiples values', () => {
@@ -133,7 +130,6 @@ describe('QuizManager', () => {
     const result = manager.checkAnswer([2, 4]);
     expect(result).toBe(true);
     expect(manager.getScore()).toBe(2);
-    expect(manager.getIncorrectAnswers()).toBe(1);
     expect(manager.getProgress()).toBe('3/4');
   });
 
@@ -142,7 +138,6 @@ describe('QuizManager', () => {
     const result = manager.checkAnswer([2, 4]);
     expect(result).toBe(false);
     expect(manager.getScore()).toBe(2);
-    expect(manager.getIncorrectAnswers()).toBe(2);
     expect(manager.getProgress()).toBe('4/4');
   });
 
@@ -153,5 +148,153 @@ describe('QuizManager', () => {
 
   test('should return the current quiz config', () => {
     expect(manager.getConfig()).toStrictEqual(mockConfig);
+  });
+});
+
+describe('When answering a question that has already been answered', () => {
+  let manager: QuizManager;
+
+  beforeAll(() => {
+    manager = new QuizManager(mockConfig);
+    manager.checkAnswer([1]);
+    manager.goToNextQuestion();
+  });
+
+  test('should remains the score when the answer is incorrect', () => {
+    manager.checkAnswer([2, 4]);
+    expect(manager.getScore()).toBe(1);
+    expect(manager.getIncorrectAnswers()).toBe(1);
+    expect(Object.fromEntries(manager.getAnswerState())).toStrictEqual({
+      '05d1d94f-a971-40f9-8f52-bfdd7e4fd4d5': {
+        isCorrect: true,
+        selectedIds: [1],
+      },
+      'c63213fc-7e7a-407c-be21-7ff4ec06e56f': {
+        isCorrect: false,
+        selectedIds: [2, 4],
+      },
+    });
+  });
+
+  test('should increase the score when the answer is correct', () => {
+    manager.checkAnswer([4]);
+    expect(manager.getScore()).toBe(2);
+    expect(manager.getIncorrectAnswers()).toBe(0);
+    expect(Object.fromEntries(manager.getAnswerState())).toStrictEqual({
+      '05d1d94f-a971-40f9-8f52-bfdd7e4fd4d5': {
+        isCorrect: true,
+        selectedIds: [1],
+      },
+      'c63213fc-7e7a-407c-be21-7ff4ec06e56f': {
+        isCorrect: true,
+        selectedIds: [4],
+      },
+    });
+  });
+
+  test('should decrease the score when the answer is incorrect', () => {
+    manager.checkAnswer([3]);
+    expect(manager.getScore()).toBe(1);
+    expect(manager.getIncorrectAnswers()).toBe(1);
+    expect(Object.fromEntries(manager.getAnswerState())).toStrictEqual({
+      '05d1d94f-a971-40f9-8f52-bfdd7e4fd4d5': {
+        isCorrect: true,
+        selectedIds: [1],
+      },
+      'c63213fc-7e7a-407c-be21-7ff4ec06e56f': {
+        isCorrect: false,
+        selectedIds: [3],
+      },
+    });
+  });
+
+  test('should not change the score when the answer is incorrect (again)', () => {
+    manager.checkAnswer([2]);
+    expect(manager.getScore()).toBe(1);
+    expect(manager.getIncorrectAnswers()).toBe(1);
+    expect(Object.fromEntries(manager.getAnswerState())).toStrictEqual({
+      '05d1d94f-a971-40f9-8f52-bfdd7e4fd4d5': {
+        isCorrect: true,
+        selectedIds: [1],
+      },
+      'c63213fc-7e7a-407c-be21-7ff4ec06e56f': {
+        isCorrect: false,
+        selectedIds: [2],
+      },
+    });
+  });
+
+  test('should increase the score when the answer is correct', () => {
+    manager.goToNextQuestion();
+    manager.checkAnswer([2, 4]);
+    expect(manager.getScore()).toBe(2);
+    expect(manager.getIncorrectAnswers()).toBe(1);
+    expect(Object.fromEntries(manager.getAnswerState())).toStrictEqual({
+      '05d1d94f-a971-40f9-8f52-bfdd7e4fd4d5': {
+        isCorrect: true,
+        selectedIds: [1],
+      },
+      'c63213fc-7e7a-407c-be21-7ff4ec06e56f': {
+        isCorrect: false,
+        selectedIds: [2],
+      },
+      '786623e5-5701-4d30-ace3-bcf8a45fb65c': {
+        isCorrect: true,
+        selectedIds: [2, 4],
+      },
+    });
+  });
+
+  test('should increase the score when the answer is correct', () => {
+    manager.goToNextQuestion();
+    manager.checkAnswer([3, 4]);
+    expect(manager.getScore()).toBe(3);
+    expect(manager.getIncorrectAnswers()).toBe(1);
+    expect(Object.fromEntries(manager.getAnswerState())).toStrictEqual({
+      '05d1d94f-a971-40f9-8f52-bfdd7e4fd4d5': {
+        isCorrect: true,
+        selectedIds: [1],
+      },
+      'c63213fc-7e7a-407c-be21-7ff4ec06e56f': {
+        isCorrect: false,
+        selectedIds: [2],
+      },
+      '786623e5-5701-4d30-ace3-bcf8a45fb65c': {
+        isCorrect: true,
+        selectedIds: [2, 4],
+      },
+      'd2d3a2c7-fd27-47a0-a012-9e703b552336': {
+        isCorrect: true,
+        selectedIds: [3, 4],
+      },
+    });
+  });
+
+  test('should go back to wrong answer (2) and change it to correct', () => {
+    manager.goToPreviousQuestion(); // back to 3º question
+    manager.goToPreviousQuestion(); // back to 2º question
+
+    manager.checkAnswer([4]);
+    expect(manager.getScore()).toBe(4);
+    expect(manager.getIncorrectAnswers()).toBe(0);
+
+    expect(Object.fromEntries(manager.getAnswerState())).toStrictEqual({
+      '05d1d94f-a971-40f9-8f52-bfdd7e4fd4d5': {
+        isCorrect: true,
+        selectedIds: [1],
+      },
+      'c63213fc-7e7a-407c-be21-7ff4ec06e56f': {
+        isCorrect: true,
+        selectedIds: [4],
+      },
+      '786623e5-5701-4d30-ace3-bcf8a45fb65c': {
+        isCorrect: true,
+        selectedIds: [2, 4],
+      },
+      'd2d3a2c7-fd27-47a0-a012-9e703b552336': {
+        isCorrect: true,
+        selectedIds: [3, 4],
+      },
+    });
   });
 });

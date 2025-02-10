@@ -136,11 +136,6 @@ describe('externalQuizConfigToInternal', () => {
         level: undefined,
       };
 
-      const overrideConfigAdapted: QuizConfig = {
-        ...mockConfigAdapted,
-        level: 'easy',
-      };
-
       expect(externalQuizConfigToInternal(overrideConfig)).toStrictEqual(
         mockConfigAdapted,
       );

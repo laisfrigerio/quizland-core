@@ -26,3 +26,8 @@ export interface QuizConfig {
   hasToShowScore: boolean;
   level: QuizLevel;
 }
+
+export interface AnswerState {
+  isCorrect: boolean;
+  selectedIds: number[];
+}
